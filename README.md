@@ -3,14 +3,14 @@
 Full-Stack Developer • React • Vite • Node.js • Python (Planned)
 Status: In Progress
 
-📌 Overview
+###📌 Overview
 
 The Advent Calendar Builder is a fully custom, interactive web application that lets users design and share personalized 7-day digital advent calendars. It features a polished onboarding flow, animated UI, fake-auth scaffolding, and a step-by-step creation wizard that guides users from signup → dashboard → calendar editing → sharing.
 
 This project is designed for portfolio-level front-end + full-stack architecture, with future integration points for a Node.js API and Python microservices.
 
 🌟 Features (In Progress)
-✅ Phase 0 — Authentication Shell
+* ✅ Phase 0 — Authentication Shell
 
 Custom AuthLayout with animated gradient background
 
@@ -20,7 +20,7 @@ Adobe Fonts (Hagrid) + hero graphics
 
 /app placeholder dashboard
 
-🚀 Phase 1 — User Dashboard (/app) (Current Work)
+* 🚀 Phase 1 — User Dashboard (/app) (Current Work)
 
 Personalized greeting: “Hi, Anisha 👋”
 
@@ -35,7 +35,7 @@ LocalStorage or in-memory data for calendars
 Draft calendars show:
 Status • Type (7-day) • Edit • Preview
 
-🧰 Phase 2 — Calendar Creation Wizard (/create)
+* 🧰 Phase 2 — Calendar Creation Wizard (/create)
 
 Wizard to set:
 
@@ -53,7 +53,7 @@ Clicking a day card → opens editor for that day
 
 On submit: generate fake ID, redirect → /calendar/:id/edit
 
-🎨 Phase 3 — Calendar Editor (/calendar/:id/edit)
+* 🎨 Phase 3 — Calendar Editor (/calendar/:id/edit)
 
 Main “builder” UI
 
@@ -71,7 +71,7 @@ Image upload / URL
 
 Calendar stored in state or localStorage
 
-🌍 Phase 4 — Share & Public View
+* 🌍 Phase 4 — Share & Public View
 
 4A — Share Panel
 
@@ -95,7 +95,7 @@ Basic user settings
 
 Placeholder for future backend integration
 
-💎 Phase 6 — Polish & UX
+* 💎 Phase 6 — Polish & UX
 
 Responsive layout
 
@@ -105,7 +105,7 @@ Fade/scale transitions when opening a day
 
 Loading states when navigating pages
 
-🗄️ Phase 7 — Backend & Database (Planned)
+* 🗄️ Phase 7 — Backend & Database (Planned)
 
 Replace fake auth with JWT sessions
 
@@ -119,7 +119,7 @@ Email notifications
 
 Analytics
 
-🧱 Tech Stack
+* 🧱 Tech Stack
 Frontend
 
 React (hooks + context)
