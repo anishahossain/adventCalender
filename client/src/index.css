@@ -69,3 +69,42 @@ button {
   font-size: 0.8rem;
   margin-top: 0.5rem;
 }
+
+
+@keyframes smoothTilt {
+  0% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: rotate(-4deg);
+  }
+}
+
+.tilt-fast {
+  animation: smoothTilt 3.5s ease-in-out infinite;
+}
+
+@keyframes smoothTiltmore {
+  0% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+  100% {
+    transform: rotate(-6deg);
+  }
+}
+
+.tilt-more {
+  animation: smoothTiltmore 3s ease-in-out infinite;
+}
+
+.tilt {
+  animation: smoothTiltmore 4s ease-in-out infinite;
+}
+
+

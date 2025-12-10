@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import SignUp from "./pages/SignUp.jsx";
-import LandingMain from "./pages/LandingMain.jsx";
+import LandingCreate from "./pages/LandingCreate.jsx";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <Route path="/" element={<Navigate to="/signup" replace />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/app" element={<LandingMain />} />
+        <Route path="/app" element={<LandingCreate />} />
       </Routes>
     </Router>
   );

@@ -39,6 +39,7 @@ function AuthLayout({ children, mode }) {
   <img
     src="/star.png"
     alt=""
+    className="tilt"
     style={{
       position: "absolute",
       top: "13%",
@@ -55,6 +56,7 @@ function AuthLayout({ children, mode }) {
   <img
     src="/heart-bubble.png"
     alt=""
+    className="tilt-more"
     style={{
       position: "absolute",
       top: "8%",
@@ -71,6 +73,7 @@ function AuthLayout({ children, mode }) {
   <img
     src="/gift.png"
     alt=""
+    className="tilt-fast"
     style={{
       position: "absolute",
       bottom: "6%",

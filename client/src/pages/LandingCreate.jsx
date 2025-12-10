@@ -1,4 +1,4 @@
-function LandingPage() {
+function LandingCreate() {
   const user = JSON.parse(localStorage.getItem('authUser') || 'null')
 
   return (
@@ -10,4 +10,4 @@ function LandingPage() {
   )
 }
 
-export default LandingPage
+export default LandingCreate;
