@@ -1,156 +1,31 @@
-🎄 Advent Calendar Builder
-
-Full-Stack Developer • React • Vite • Node.js • Python (Planned)
-Status: In Progress
-
-###📌 Overview
-
-The Advent Calendar Builder is a fully custom, interactive web application that lets users design and share personalized 7-day digital advent calendars. It features a polished onboarding flow, animated UI, fake-auth scaffolding, and a step-by-step creation wizard that guides users from signup → dashboard → calendar editing → sharing.
-
-This project is designed for portfolio-level front-end + full-stack architecture, with future integration points for a Node.js API and Python microservices.
-
-🌟 Features (In Progress)
-* ✅ Phase 0 — Authentication Shell
-
-Custom AuthLayout with animated gradient background
-
-Adobe Fonts (Hagrid) + hero graphics
-
-/signup and /login pages with fake auth (localStorage)
-
-/app placeholder dashboard
-
-* 🚀 Phase 1 — User Dashboard (/app) (Current Work)
-
-Personalized greeting: “Hi, Anisha 👋”
-
-CTA cards:
-
-Create a New Advent Calendar
-
-Your Calendars (Draft / Live)
-
-LocalStorage or in-memory data for calendars
-
-Draft calendars show:
-Status • Type (7-day) • Edit • Preview
-
-* 🧰 Phase 2 — Calendar Creation Wizard (/create)
-
-Wizard to set:
-
-Title
-
-Description
-
-Theme
-
-Share toggle (UI only for now)
-
-Grid of 7 days (small cards)
-
-Clicking a day card → opens editor for that day
-
-On submit: generate fake ID, redirect → /calendar/:id/edit
-
-* 🎨 Phase 3 — Calendar Editor (/calendar/:id/edit)
-
-Main “builder” UI
-
-Selectable day tiles
-
-Side drawer Day Editor:
-
-Day title
-
-Text content
-
-Image upload / URL
-
-“Preview this day”
-
-Calendar stored in state or localStorage
-
-* 🌍 Phase 4 — Share & Public View
-
-4A — Share Panel
-
-“Share Calendar” button
-
-Fake URL generation (/view/abcd1234)
-
-One-click copy
-
-4B — Public Viewer (/view/:slug)
-
-Open-to-everyone read-only calendar view
-
-Receiver-focused styling
-
-Click day → modal opens with that day’s content
-
-⚙️ Phase 5 — Optional Profile Page
-
-Basic user settings
-
-Placeholder for future backend integration
-
-* 💎 Phase 6 — Polish & UX
-
-Responsive layout
-
-Smooth hover animations
-
-Fade/scale transitions when opening a day
-
-Loading states when navigating pages
-
-* 🗄️ Phase 7 — Backend & Database (Planned)
-
-Replace fake auth with JWT sessions
-
-Store calendars in real DB
-
-Python microservice for:
-
-Auto-generating content
-
-Email notifications
-
-Analytics
-
-* 🧱 Tech Stack
-Frontend
-
-React (hooks + context)
-
-Vite (lightning-fast dev environment)
-
-Tailwind / custom CSS
-
-Adobe Fonts + animated gradients
-
-Framer Motion (planned polish)
-
-Backend (Planned)
-
-Node.js Express API
-
-JWT authentication
-
-PostgreSQL or MongoDB
-
-Python microservices for AI-generated content
-
-Tooling
-
-Git (structured branching)
-
-SSH + multi-server architecture (planned)
-
-LocalStorage mock backend
-
-📂 Project Structure (Simplified)
+# 🎄 Advent Calendar Builder
+
+Interactive, portfolio-ready web app for crafting and sharing 7-day digital advent calendars. Built for a polished onboarding-to-builder journey with future hooks for Node.js and Python services.
+
+## Status
+- In progress; current focus on Phase 1 (Dashboard)
+- Planned: Node.js API + Python microservices for AI content and notifications
+
+## Overview
+Design and share custom advent calendars through a guided flow: auth → dashboard → calendar creation → editing → public sharing. The UX emphasizes animated gradients, playful typography, and clear CTAs while keeping fake-auth and data in the front end for rapid iteration.
+
+## Feature Phases
+- ✅ Phase 0 — Authentication shell: animated gradient AuthLayout, Adobe Fonts (Hagrid), `/signup` + `/login` with localStorage-backed fake auth, placeholder `/app`.
+- 🚀 Phase 1 — Dashboard (`/app`, current): greeting (“Hi, Anisha 👋”), CTA cards for “Create a New Advent Calendar” and “Your Calendars”, in-memory/localStorage draft data with status/type/edit/preview actions.
+- 🧰 Phase 2 — Creation Wizard (`/create`): set title, description, theme, share toggle (UI), 7-day grid, day-card editor, submit to generate fake ID then redirect to `/calendar/:id/edit`.
+- 🎨 Phase 3 — Calendar Editor (`/calendar/:id/edit`): builder UI with selectable day tiles, side drawer day editor (title, text, image upload/URL, preview), state/localStorage storage.
+- 🌍 Phase 4 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
+- ⚙️ Phase 5 — Profile: basic user settings and hooks for backend integration.
+- 💎 Phase 6 — Polish & UX: responsive layout, smooth hover states, fade/scale transitions, loading states between pages.
+- 🗄️ Phase 7 — Backend & Database: replace fake auth with JWT, persist calendars in DB (PostgreSQL/MongoDB), Python services for auto-content, email, analytics.
+
+## Tech Stack
+- Frontend: React (hooks + context), Vite, Tailwind/custom CSS, Adobe Fonts, Framer Motion (planned).
+- Backend (planned): Node.js + Express, JWT auth, PostgreSQL or MongoDB, Python microservices for AI/content.
+- Tooling: Git, SSH/multi-server-ready architecture, localStorage mock backend.
+
+## Project Structure (simplified)
+```
 /src
   /components
   /pages
@@ -162,39 +37,27 @@ LocalStorage mock backend
   /context
   /hooks
   /utils
+```
 
-📸 Screenshots (Add Later)
-
-PLACEHOLDER — Screenshot 1: Auth Layout
-
-PLACEHOLDER — Screenshot 2: Dashboard
-
-PLACEHOLDER — Screenshot 3: Calendar Editor
-
-🧪 Development Setup
+## Development
+```bash
 git clone <your-repo-url>
-cd advent-calendar-builder
+cd adventCalender
 npm install
 npm run dev
+```
 
-📝 Roadmap
+## Roadmap (next up)
+- Finish Phase 1 dashboard polish and data wiring.
+- Build creation wizard and editor flows.
+- Add share modal + public viewer.
+- Layer profile page + backend auth.
+- Integrate AI/Python auto-content generator.
 
- Finish Phase 1 Dashboard
+## Screenshots (todo)
+- Auth layout
+- Dashboard
+- Calendar editor
 
- Build create wizard
-
- Build calendar editor
-
- Add share modal
-
- Implement public viewer
-
- Add profile page
-
- Add backend authentication
-
- Add AI/Python auto-content generator
-
-👩‍💻 About the Developer
-
-Built by Anisha Hossain — Full-Stack Developer & Research Assistant, focusing on interactive design, React architecture, and full-stack product development.
+## About the Developer
+Built by Anisha Hossain — Full-Stack Developer & Research Assistant focused on interactive design, React architecture, and full-stack product development.
