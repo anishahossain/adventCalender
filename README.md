@@ -4,6 +4,8 @@ Interactive, portfolio-ready web app for crafting and sharing 7-day digital adve
 
 ## Status
 - In progress; current focus on Phase 1 (Dashboard)
+<img width="2620" height="1468" alt="image" src="https://github.com/user-attachments/assets/d807b546-d1f5-4ceb-aa9b-6a9ecc7f9d6e" />
+
 - Planned: Node.js API + Python microservices for AI content and notifications
 
 ## Overview
@@ -60,4 +62,4 @@ npm run dev
 - Calendar editor
 
 ## About the Developer
-Built by Anisha Hossain — Full-Stack Developer & Research Assistant focused on interactive design, React architecture, and full-stack product development.
+Built by Anisha Hossain - Full-Stack Developer & Research Assistant focused on interactive design, React architecture, and full-stack product development.
