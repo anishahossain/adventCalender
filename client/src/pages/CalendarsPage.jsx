@@ -38,13 +38,146 @@ function CalendarsPage() {
   }, [])
 
   return (
-    <div style={{ minHeight: '100vh', padding: '3rem', fontFamily: '"sofia-pro", "Gill Sans", sans-serif' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <Link to="/app" style={{ textDecoration: 'underline' }}>
+    <div
+      className="calendars-shell gradient-bg"
+      style={{
+        minHeight: '100vh',
+        padding: '3rem',
+        fontFamily: '"sofia-pro", "Gill Sans", sans-serif',
+        '--ink': '#201914',
+        '--paper': '#fff7ea',
+        '--accent': '#ff6fae',
+        '--accent-strong': '#e45695',
+      }}
+    >
+      <style>{`
+        .calendars-shell {
+          color: var(--ink);
+          background:
+            radial-gradient(circle at 10% 10%, #ffe2a5, transparent 45%),
+            radial-gradient(circle at 90% 0%, #f7d2ea, transparent 55%),
+            radial-gradient(circle at 90% 90%, #d9f0df, transparent 50%),
+            linear-gradient(120deg, #fff4e3, #fef7ef 45%, #fff3f9);
+        }
+
+        .calendar-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 1.5rem;
+        }
+
+        .calendar-card {
+          background: #fff;
+          border: 1px solid #111;
+          padding: 1.5rem;
+          display: grid;
+          gap: 0.85rem;
+          box-shadow: 6px 6px 0 #111;
+        }
+
+        .calendar-meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.6rem;
+          font-size: 0.85rem;
+        }
+
+        .badge {
+          padding: 0.2rem 0.6rem;
+          border: 1px solid #111;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          font-size: 0.65rem;
+          background: #fff4d7;
+        }
+
+        .badge.live {
+          background: #dcf7e5;
+        }
+
+        .card-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .pill-button {
+          padding: 0.6rem 1rem;
+          border: 1px solid #111;
+          font-size: 0.85rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          cursor: pointer;
+          text-decoration: none;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          background: #111;
+          color: #fff;
+          border-radius: 999px;
+          transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .pill-button.secondary {
+          background: transparent;
+          color: #111;
+        }
+
+        .pill-button:hover {
+          background: linear-gradient(90deg, #ff9ac2, #fff);
+          color: #111;
+        }
+
+        .pill-button[aria-disabled="true"]:hover {
+          background: transparent;
+          color: #111;
+        }
+
+        .pill-button[disabled],
+        .pill-button[aria-disabled="true"] {
+          opacity: 0.4;
+          cursor: not-allowed;
+        }
+
+        .share-note {
+          font-size: 0.75rem;
+          margin: 0;
+          color: #6b5548;
+        }
+
+        .home-link {
+          display: inline-block;
+          transition: transform 0.2s ease;
+        }
+
+        .home-link:hover {
+          transform: scale(1.06);
+        }
+
+        .home-link-button {
+          border: 1px solid #111;
+          padding: 0.5rem 0.9rem;
+          background: transparent;
+          cursor: pointer;
+          border-radius: 999px;
+        }
+      `}</style>
+      <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <h1 style={{ fontFamily: '"hagrid", "sofia-pro", sans-serif', margin: 0 }}>Your Calendars</h1>
+        <Link
+          to="/app"
+          className="home-link home-link-button"
+          style={{
+            margin: 0,
+            letterSpacing: '0.16em',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+        >
           Back to home base
         </Link>
       </div>
-      <h1 style={{ fontFamily: '"hagrid", "sofia-pro", sans-serif', marginTop: 0 }}>Your Calendars</h1>
       <div className="calendar-grid" style={{ marginTop: '2rem' }}>
         {calendars.map((calendar, index) => (
           <article

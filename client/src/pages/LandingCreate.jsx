@@ -35,7 +35,7 @@ function LandingCreate() {
 
   return (
     <div
-      className="landing-shell"
+      className="landing-shell gradient-bg"
       style={{
         '--ink': '#201914',
         '--paper': '#fff7ea',
