@@ -11,13 +11,17 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 
 ## Feature Phases
 - ✅ Phase 0 — Authentication shell: animated gradient AuthLayout, Adobe Fonts (Hagrid), `/signup` + `/login` with localStorage-backed fake auth, placeholder `/app`.
-- 🚀 Phase 1 — Dashboard (`/app`, current): greeting hero, CTA card for “Create a New Advent Calendar”, localStorage-seeded draft data, edit/preview/share actions, and a dedicated “Your Calendars” page at `/app/calendars`.
-- 🧰 Phase 2 — Landing page created; currently working on the existing calendars dashboard.
-- 🎨 Phase 3 — Build a new calendar dashboard: creation flow and builder UI (planned).
-- 🌍 Phase 4 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
-- ⚙️ Phase 5 — Profile: basic user settings and hooks for backend integration.
-- 💎 Phase 6 — Polish & UX: responsive layout, smooth hover states, fade/scale transitions, loading states between pages.
-- 🗄️ Phase 7 — Backend & Database: replace fake auth with JWT, persist calendars in DB (PostgreSQL/MongoDB), Python services for auto-content, email, analytics.
+  <img width="2620" height="1468" alt="image" src="https://github.com/user-attachments/assets/189d9df6-4a7a-4d7d-829d-9dcd42750bb9" />
+
+- ✅ Phase 1 — Dashboard (`/app`, current): greeting hero, CTA card for “Create a New Advent Calendar”, localStorage-seeded draft data, edit/preview/share actions, and a dedicated “Your Calendars” page at `/app/calendars`.
+  <img width="2940" height="1678" alt="image" src="https://github.com/user-attachments/assets/2b6b52d3-4db7-4635-b2e7-60d6d7392bce" />
+
+- Phase 2 — Landing page created; currently working on the existing calendars dashboard.
+- Phase 3 — Build a new calendar dashboard: creation flow and builder UI (planned).
+- Phase 4 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
+- Phase 5 — Profile: basic user settings and hooks for backend integration.
+- Phase 6 — Polish & UX: responsive layout, smooth hover states, fade/scale transitions, loading states between pages.
+- Phase 7 — Backend & Database: replace fake auth with JWT, persist calendars in DB (PostgreSQL/MongoDB), Python services for auto-content, email, analytics.
 
 ## Tech Stack
 - Frontend: React (hooks + context), Vite, Tailwind/custom CSS, Adobe Fonts, Framer Motion (planned).
