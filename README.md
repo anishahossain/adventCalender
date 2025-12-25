@@ -12,8 +12,8 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 ## Feature Phases
 - ✅ Phase 0 — Authentication shell: animated gradient AuthLayout, Adobe Fonts (Hagrid), `/signup` + `/login` with localStorage-backed fake auth, placeholder `/app`.
 - 🚀 Phase 1 — Dashboard (`/app`, current): greeting hero, CTA card for “Create a New Advent Calendar”, localStorage-seeded draft data, edit/preview/share actions, and a dedicated “Your Calendars” page at `/app/calendars`.
-- 🧰 Phase 2 — Creation Wizard (`/create`): set title, description, theme, share toggle (UI), 7-day grid, day-card editor, submit to generate fake ID then redirect to `/calendar/:id/edit`.
-- 🎨 Phase 3 — Calendar Editor (`/calendar/:id/edit`): builder UI with selectable day tiles, side drawer day editor (title, text, image upload/URL, preview), state/localStorage storage.
+- 🧰 Phase 2 — Landing page created; currently working on the existing calendars dashboard.
+- 🎨 Phase 3 — Build a new calendar dashboard: creation flow and builder UI (planned).
 - 🌍 Phase 4 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
 - ⚙️ Phase 5 — Profile: basic user settings and hooks for backend integration.
 - 💎 Phase 6 — Polish & UX: responsive layout, smooth hover states, fade/scale transitions, loading states between pages.
@@ -47,12 +47,15 @@ npm run dev
 - Integrate AI/Python auto-content generator.
 
 ## Screenshots
+Add Phase 0 screenshot here (replace the file with your new image):
+
+![Phase 0 Auth](docs/screenshots/phase0-auth.png)
+
 Add Phase 1 screenshot here (replace the file with your new image):
 
 ![Phase 1 Dashboard](docs/screenshots/phase1-dashboard.png)
 
 Todo:
-- Auth layout
 - Calendar editor
 
 ## About the Developer
