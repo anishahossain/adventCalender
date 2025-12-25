@@ -62,11 +62,9 @@ npm run dev
 ```
 
 ## Roadmap (next up)
-- Finish Phase 1 dashboard polish and data wiring.
-- Build creation wizard and editor flows.
-- Add share modal + public viewer.
-- Layer profile page + backend auth.
-- Integrate AI/Python auto-content generator.
+- Phase 3: finish day editors 3–7 and make all day types functional.
+- Phase 4: backend stabilization and data integrity checks.
+- Phase 5: authorization + account storage.
 
 
 Todo:
