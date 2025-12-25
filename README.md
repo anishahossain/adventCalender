@@ -20,9 +20,11 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
   <img width="800" alt="Phase 2 Day Editing" src="https://github.com/user-attachments/assets/52b328c9-e9e1-48eb-8d02-1d65bc4749ef" />
   <img width="800" alt="image" src="https://github.com/user-attachments/assets/313383fa-284d-4cba-a082-6850b93ad6f9" />
   <img width="800" alt="image" src="https://github.com/user-attachments/assets/40b0f8ef-b8c0-49b1-8d40-ee490dfb092a" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/5af0714b-a8c9-431b-be9c-18f65aa1b3b5" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/5a9dba41-babb-4e7e-936c-804d2c5fda46" />
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/51246007-89df-4234-8fc5-3f2b679ec148" />
+  <img width="500" alt="image" src="https://github.com/user-attachments/assets/5af0714b-a8c9-431b-be9c-18f65aa1b3b5" />
+  <img width="500" alt="image" src="https://github.com/user-attachments/assets/5a9dba41-babb-4e7e-936c-804d2c5fda46" />
+  <img width="500" alt="image" src="https://github.com/user-attachments/assets/51246007-89df-4234-8fc5-3f2b679ec148" />
+  <img width="500" alt="image" src="https://github.com/user-attachments/assets/61e869a4-f8b2-40dc-a349-9c0423c22de5" />
+
 
 
 
