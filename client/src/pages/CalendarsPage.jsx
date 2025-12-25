@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { listCalendars } from '../api/calendars'
 
 const fallbackCalendars = [
   {
@@ -22,20 +23,68 @@ function CalendarsPage() {
   const [calendars, setCalendars] = useState([])
 
   useEffect(() => {
-    const stored = localStorage.getItem('adventCalendars')
-    if (!stored) {
-      setCalendars(fallbackCalendars)
-      localStorage.setItem('adventCalendars', JSON.stringify(fallbackCalendars))
-      return
+    async function loadCalendars() {
+      const stored = localStorage.getItem('adventCalendars')
+      let localCalendars = []
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored)
+          localCalendars = Array.isArray(parsed) ? parsed : []
+        } catch {
+          localCalendars = []
+        }
+      }
+
+      try {
+        const data = await listCalendars()
+        const apiCalendars = Array.isArray(data) ? data : []
+        const merged = new Map()
+
+        apiCalendars.forEach(calendar => merged.set(calendar.id, calendar))
+        localCalendars.forEach(localCalendar => {
+          const existing = merged.get(localCalendar.id)
+          if (!existing) {
+            merged.set(localCalendar.id, localCalendar)
+            return
+          }
+
+          const apiUpdated = Date.parse(existing.updatedAt || 0)
+          const localUpdated = Date.parse(localCalendar.updatedAt || 0)
+          if (localUpdated > apiUpdated) {
+            merged.set(localCalendar.id, localCalendar)
+          }
+        })
+
+        const mergedList = Array.from(merged.values())
+        setCalendars(mergedList.length ? mergedList : fallbackCalendars)
+        localStorage.setItem('adventCalendars', JSON.stringify(mergedList))
+        return
+      } catch (err) {
+        // Fall back to local draft storage if API is unavailable.
+      }
+
+      if (!localCalendars.length) {
+        setCalendars(fallbackCalendars)
+        localStorage.setItem('adventCalendars', JSON.stringify(fallbackCalendars))
+        return
+      }
+
+      setCalendars(localCalendars)
     }
 
-    try {
-      const parsed = JSON.parse(stored)
-      setCalendars(Array.isArray(parsed) ? parsed : fallbackCalendars)
-    } catch {
-      setCalendars(fallbackCalendars)
-    }
+    loadCalendars()
   }, [])
+
+  const displayCalendars = calendars.map(calendar => {
+    if (calendar.title) return calendar
+    return {
+      id: calendar.id,
+      title: calendar.name || 'Untitled Calendar',
+      status: calendar.status || 'Draft',
+      typeDays: calendar.days?.length || 7,
+      updated: calendar.updatedAt ? `Updated ${new Date(calendar.updatedAt).toLocaleDateString()}` : 'Updated recently',
+    }
+  })
 
   return (
     <div
@@ -179,7 +228,7 @@ function CalendarsPage() {
         </Link>
       </div>
       <div className="calendar-grid" style={{ marginTop: '2rem' }}>
-        {calendars.map((calendar, index) => (
+        {displayCalendars.map((calendar, index) => (
           <article
             className="calendar-card"
             key={calendar.id}
@@ -196,7 +245,7 @@ function CalendarsPage() {
               <span className="badge">Type: {calendar.typeDays}-day</span>
             </div>
             <div className="card-actions">
-              <Link className="pill-button" to={`/app/calendar/${calendar.id}/edit`}>
+              <Link className="pill-button" to={`/app/calendars/${calendar.id}/edit`}>
                 Edit
               </Link>
               <Link className="pill-button secondary" to={`/app/calendar/${calendar.id}/preview`}>
