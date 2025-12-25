@@ -17,8 +17,16 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
   <img width="1200" alt="Phase 1 Dashboard" src="https://github.com/user-attachments/assets/2b6b52d3-4db7-4635-b2e7-60d6d7392bce" />
 
 - ✅ Phase 2 — Creation + day editing: `/app/create`, `/app/calendars/:id/edit` 7‑day dashboard, Day 1 (Message) editor with background presets, Day 2 (Picture) editor with upload + preview, day preview screen, Postgres persistence.
-  <img width="1200" alt="Phase 2 Day Editing" src="https://github.com/user-attachments/assets/52b328c9-e9e1-48eb-8d02-1d65bc4749ef" />
+  <img width="800" alt="Phase 2 Day Editing" src="https://github.com/user-attachments/assets/52b328c9-e9e1-48eb-8d02-1d65bc4749ef" />
   <img width="800" alt="image" src="https://github.com/user-attachments/assets/313383fa-284d-4cba-a082-6850b93ad6f9" />
+  <img width="800" alt="image" src="https://github.com/user-attachments/assets/40b0f8ef-b8c0-49b1-8d40-ee490dfb092a" />
+  <img width="800" alt="image" src="https://github.com/user-attachments/assets/5af0714b-a8c9-431b-be9c-18f65aa1b3b5" />
+  <img width="800" alt="image" src="https://github.com/user-attachments/assets/5a9dba41-babb-4e7e-936c-804d2c5fda46" />
+  <img width="800" alt="image" src="https://github.com/user-attachments/assets/51246007-89df-4234-8fc5-3f2b679ec148" />
+
+
+
+
 
 
 - Phase 3 — Finish day editors 3–7: Special Song, Book rec, Virtual flowers, A product link, Favorite memory.
