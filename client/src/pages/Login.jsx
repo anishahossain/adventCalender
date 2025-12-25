@@ -27,6 +27,7 @@ function LoginPage() {
 
       localStorage.setItem('authToken', data.token)
       localStorage.setItem('authUser', JSON.stringify(data.user))
+      localStorage.setItem('authLastAction', 'app')
 
       navigate('/app')
     } catch (err) {

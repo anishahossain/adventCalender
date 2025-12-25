@@ -3,9 +3,7 @@
 Interactive, portfolio-ready web app for crafting and sharing 7-day digital advent calendars. Built for a polished onboarding-to-builder journey with future hooks for Node.js and Python services.
 
 ## Status
-- In progress; current focus on Phase 1 (Dashboard)
-<img width="2620" height="1468" alt="image" src="https://github.com/user-attachments/assets/d807b546-d1f5-4ceb-aa9b-6a9ecc7f9d6e" />
-
+- In progress; Phase 1 (Dashboard + Calendars page) is active
 - Planned: Node.js API + Python microservices for AI content and notifications
 
 ## Overview
@@ -13,7 +11,7 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 
 ## Feature Phases
 - ✅ Phase 0 — Authentication shell: animated gradient AuthLayout, Adobe Fonts (Hagrid), `/signup` + `/login` with localStorage-backed fake auth, placeholder `/app`.
-- 🚀 Phase 1 — Dashboard (`/app`, current): greeting (“Hi, Anisha 👋”), CTA cards for “Create a New Advent Calendar” and “Your Calendars”, in-memory/localStorage draft data with status/type/edit/preview actions.
+- 🚀 Phase 1 — Dashboard (`/app`, current): greeting hero, CTA card for “Create a New Advent Calendar”, localStorage-seeded draft data, edit/preview/share actions, and a dedicated “Your Calendars” page at `/app/calendars`.
 - 🧰 Phase 2 — Creation Wizard (`/create`): set title, description, theme, share toggle (UI), 7-day grid, day-card editor, submit to generate fake ID then redirect to `/calendar/:id/edit`.
 - 🎨 Phase 3 — Calendar Editor (`/calendar/:id/edit`): builder UI with selectable day tiles, side drawer day editor (title, text, image upload/URL, preview), state/localStorage storage.
 - 🌍 Phase 4 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
@@ -26,20 +24,12 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 - Backend (planned): Node.js + Express, JWT auth, PostgreSQL or MongoDB, Python microservices for AI/content.
 - Tooling: Git, SSH/multi-server-ready architecture, localStorage mock backend.
 
-## Project Structure (simplified)
-```
-/src
-  /components
-  /pages
-    auth/
-    app/
-    create/
-    editor/
-    public/
-  /context
-  /hooks
-  /utils
-```
+## Key Routes (Phase 1)
+- `/signup` and `/login`: auth shell, both redirect to `/app`
+- `/app`: landing dashboard (CTA, hero, entry point)
+- `/app/calendars`: calendars list
+- `/app/create`: placeholder create flow
+- `/app/calendar/:id/edit`, `/preview`, `/share`: placeholders
 
 ## Development
 ```bash
@@ -56,9 +46,13 @@ npm run dev
 - Layer profile page + backend auth.
 - Integrate AI/Python auto-content generator.
 
-## Screenshots (todo)
+## Screenshots
+Add Phase 1 screenshot here (replace the file with your new image):
+
+![Phase 1 Dashboard](docs/screenshots/phase1-dashboard.png)
+
+Todo:
 - Auth layout
-- Dashboard
 - Calendar editor
 
 ## About the Developer
