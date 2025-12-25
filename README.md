@@ -32,15 +32,17 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 
 
 - Phase 3 — Finish day editors 3–7: Special Song, Book rec, Virtual flowers, A product link, Favorite memory.
-- Phase 4 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
-- Phase 5 — Profile: basic user settings and hooks for backend integration.
-- Phase 6 — Polish & UX: responsive layout, smooth hover states, fade/scale transitions, loading states between pages.
-- Phase 7 — Backend & Database: replace fake auth with JWT, persist calendars in DB (PostgreSQL/MongoDB), Python services for auto-content, email, analytics.
+- Phase 4 — Backend implementation after day functionality: stabilize API, data integrity, and persistence flows.
+- Phase 5 — Authorization and account storage: auth flows, user profiles, permissions.
+- Phase 6 — Deployment: environment setup, hosting, and production configs.
+- Phase 7 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
+- Phase 8 — Profile: basic user settings and hooks for backend integration.
+- Phase 9 — Polish & UX: responsive layout, smooth hover states, fade/scale transitions, loading states between pages.
 
 ## Tech Stack
-- Frontend: React (hooks + context), Vite, Tailwind/custom CSS, Adobe Fonts, Framer Motion (planned).
-- Backend (planned): Node.js + Express, JWT auth, PostgreSQL or MongoDB, Python microservices for AI/content.
-- Tooling: Git, SSH/multi-server-ready architecture, localStorage mock backend.
+- Frontend: React (hooks), Vite, custom CSS, Adobe Fonts.
+- Backend: Node.js + Express, PostgreSQL (JSONB days).
+- Tooling: Git, localStorage offline cache, pg driver.
 
 ## Key Routes
 - `/signup` and `/login`: auth shell, both redirect to `/app`
