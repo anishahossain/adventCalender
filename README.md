@@ -3,7 +3,7 @@
 Interactive, portfolio-ready web app for crafting and sharing 7-day digital advent calendars. Built for a polished onboarding-to-builder journey with future hooks for Node.js and Python services.
 
 ## Status
-- In progress; Phase 1 (Dashboard + Calendars page) is active
+- In progress: Phase 3 (Calender builder) is active
 - Planned: Node.js API + Python microservices for AI content and notifications
 
 ## Overview
@@ -16,7 +16,9 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 - ✅ Phase 1 — Dashboard (`/app`, current): greeting hero, CTA card for “Create a New Advent Calendar”, localStorage-seeded draft data, edit/preview/share actions, and a dedicated “Your Calendars” page at `/app/calendars`.
   <img width="2940" height="1678" alt="image" src="https://github.com/user-attachments/assets/2b6b52d3-4db7-4635-b2e7-60d6d7392bce" />
 
-- Phase 2 — Landing page created; currently working on the existing calendars dashboard.
+- ✅ Phase 2 — Landing page created; currently working on the existing calendars dashboard.
+  <img width="2938" height="1050" alt="image" src="https://github.com/user-attachments/assets/52b328c9-e9e1-48eb-8d02-1d65bc4749ef" />
+
 - Phase 3 — Build a new calendar dashboard: creation flow and builder UI (planned).
 - Phase 4 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
 - Phase 5 — Profile: basic user settings and hooks for backend integration.
