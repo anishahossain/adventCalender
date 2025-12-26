@@ -70,6 +70,50 @@ button {
   margin-top: 0.5rem;
 }
 
+.segmented {
+  display: flex;
+  border: 1px solid #111;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.segmented button {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.segmented button.active {
+  background: #111;
+  color: #fff;
+}
+
+.color-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.color-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid #111;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+}
+
+.color-swatch.active {
+  outline: 3px solid #111;
+  outline-offset: 2px;
+}
+
 
 @keyframes smoothTilt {
   0% {
@@ -123,5 +167,4 @@ button {
     transform: translateY(0);
   }
 }
-
 
