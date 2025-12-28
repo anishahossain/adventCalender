@@ -8,7 +8,7 @@ function LoginPage() {
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+  const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
 
   async function handleSubmit(e) {
     e.preventDefault()
