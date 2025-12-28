@@ -3,11 +3,11 @@
 Interactive, portfolio-ready web app for crafting and sharing 7-day digital advent calendars. Built for a polished onboarding-to-builder journey with future hooks for Node.js and Python services.
 
 ## Status
-- In progress: Phase 2 (calendar creation + day editing) is active
-- Data now persists in Postgres with localStorage as offline cache
+- Completed and deployed-ready
+- Full backend + sharing flow with view-only recipients
 
 ## Overview
-Design and share custom advent calendars through a guided flow: auth → dashboard → calendar creation → editing → public sharing. The UX emphasizes animated gradients, playful typography, and clear CTAs while keeping fake-auth and data in the front end for rapid iteration.
+Design and share custom advent calendars through a guided flow: auth → dashboard → calendar creation → editing → publish/share → public view. The UX emphasizes animated gradients, playful typography, and clear CTAs with a production-ready backend and share tokens.
 
 ## Feature Phases
 - ✅ Phase 0 — Authentication shell: animated gradient AuthLayout, Adobe Fonts (Hagrid), `/signup` + `/login` with localStorage-backed fake auth, placeholder `/app`.
@@ -21,21 +21,20 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 - ✅ Phase 3 — Finish day editors 3–7: Special Song, Book rec, Virtual flowers, A product link, Favorite memory.
 - ✅ Phase 4 — Backend implementation after day functionality: stabilize API, data integrity, and persistence flows.
 - ✅ Phase 5 — Authorization and account storage: auth flows, user profiles, permissions.
-- Phase 6 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
-- Phase 7 — Deployment: environment setup, hosting, and production configs.
-- Phase 8 — Profile: basic user settings and hooks for backend integration.
-- Phase 9 — Polish & UX: responsive layout, smooth hover states, fade/scale transitions, loading states between pages.
+- ✅ Phase 6 — Sharing & Public View: publish/unpublish, generated share token, one-click copy, read-only public viewer with per-day routes and recipient-focused styling.
+- ✅ Phase 7 — Deployment: environment setup, hosting, and production configs.
+- ✅ Phase 8 — Profile: basic user settings and hooks for backend integration.
+- ✅ Phase 9 — Polish & UX: responsive layout, hover states, share effects, loading states between pages.
 
 ## Tech Stack
 - Frontend: React (hooks), Vite, custom CSS, Adobe Fonts.
 - Backend: Node.js + Express, PostgreSQL (JSONB days).
 - Tooling: Git, localStorage offline cache, pg driver.
 
-## Databse Schema
-- there are two public tables: users and calendars
-- calenders table with columns: id (PK), name, description, type, days, status, updated_at
-- users table with columns: id (PK), username, password_hash, created_at
-- The calendars.user_id column has a foreign key to users.id, which enforces that every calendar belongs to a valid user
+## Database Schema
+- tables: `users`, `calendars`
+- calendars columns: `id` (PK), `user_id` (FK), `name`, `description`, `type`, `days` (JSONB), `status`, `share_token`, `is_published`, `published_at`, `updated_at`
+- users columns: `id` (PK), `username`, `password_hash`, `created_at`
 
 ## Key Routes
 - `/signup` and `/login`: auth shell, both redirect to `/app`
@@ -43,8 +42,11 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 - `/app/calendars`: calendars list
 - `/app/create`: create new calendar details
 - `/app/calendars/:id/edit`: 7‑day dashboard for a calendar
+- `/app/calendar/:id/share`: owner share screen (publish/unpublish/regenerate)
 - `/app/calendar/day/1/edit` – `/app/calendar/day/7/edit`: per‑day editors
 - `/app/calendar/day/:id/preview`: read‑only day preview
+- `/share/:shareToken`: public, view-only calendar
+- `/share/:shareToken/day/:dayId`: public, view-only day
 
 ## Development
 ```bash
@@ -58,11 +60,21 @@ backend:
 node server_node/src/index.js
 ```
 
-## Roadmap (next up)
-- Phase 6 — Sharing & Public View: share panel with generated link (`/view/slug`), one-click copy, read-only public viewer with modal per day and receiver-focused styling.
+## Deployment
+Backend (Render):
+- Root: `server_node`
+- Build: `npm install`
+- Start: `node src/index.js`
+- Env vars: `DATABASE_URL`, `SESSION_SECRET`, `NODE_ENV=production`, `CORS_ORIGIN=https://<your-vercel-app>.vercel.app`
 
-Todo:
-- Calendar Sharing
+Frontend (Vercel):
+- Root: `client`
+- Build: `npm run build`
+- Output: `dist`
+- Env vars: `VITE_API_BASE_URL=https://<your-render-backend>.onrender.com`
+
+Vercel SPA routing:
+- `client/vercel.json` rewrites all paths to `index.html` for `/share/:token` routes.
 
 ## About the Developer
 Built by Anisha Hossain - Full-Stack Developer & Research Assistant focused on interactive design, React architecture, and full-stack product development.

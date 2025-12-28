@@ -232,15 +232,23 @@ function ShareCalendarDashboard() {
 
           .instructions-wrap {
             margin-top: 1.5rem;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            grid-template-areas:
+              "leftTop rightTop"
+              "card card"
+              "leftBottom rightBottom";
+            justify-content: center;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.75rem 1.5rem;
           }
 
           .share-instructions {
             padding: 1rem 1.1rem;
             font-size: 0.95rem;
             order: 1;
+            grid-area: card;
+            max-width: min(720px, 100%);
           }
 
           .instruction-decor {
@@ -252,18 +260,22 @@ function ShareCalendarDashboard() {
 
           .decor-left-top {
             order: 0;
+            grid-area: leftTop;
           }
 
           .decor-left-bottom {
             order: 2;
+            grid-area: leftBottom;
           }
 
           .decor-right-top {
             order: 0;
+            grid-area: rightTop;
           }
 
           .decor-right-bottom {
             order: 2;
+            grid-area: rightBottom;
           }
 
           .share-footer-decor {
@@ -285,6 +297,10 @@ function ShareCalendarDashboard() {
           .instruction-decor {
             width: 36px;
             height: 36px;
+          }
+
+          .instructions-wrap {
+            gap: 0.65rem 1.1rem;
           }
 
           .share-footer-decor {
