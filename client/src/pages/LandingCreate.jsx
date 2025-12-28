@@ -436,10 +436,7 @@ function LandingCreate() {
           <div
             className="right-panel"
             style={{
-              flexBasis: '40%',
-              maxWidth: '50%',
-              padding: '3rem 3.5rem',
-              paddingRight: '5rem',
+              padding: '2.5rem',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',

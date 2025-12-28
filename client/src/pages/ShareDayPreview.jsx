@@ -401,9 +401,7 @@ function ShareDayPreview() {
                 >
                   Listen to the song
                 </a>
-              ) : (
-                <div className="preview-message song-outline">Add a song link to preview it.</div>
-              )}
+              ) : null}
             </div>
           ) : isBookDay ? (
             <div className="preview-book">
