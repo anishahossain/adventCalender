@@ -7,10 +7,11 @@ function LandingCreate() {
   const lastAction = localStorage.getItem('authLastAction')
   const [showDashboard, setShowDashboard] = useState(lastAction !== 'login')
   const navigate = useNavigate()
+  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
   async function handleLogout() {
     try {
-      await fetch('http://localhost:4000/api/auth/logout', {
+      await fetch(`${apiBase}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       })

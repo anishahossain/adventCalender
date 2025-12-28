@@ -8,6 +8,7 @@ function LoginPage() {
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
+  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -15,7 +16,7 @@ function LoginPage() {
     setIsSubmitting(true)
 
     try {
-      const res = await fetch('http://localhost:4000/api/auth/login', {
+      const res = await fetch(`${apiBase}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
