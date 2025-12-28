@@ -6,11 +6,12 @@ const calendarRoutes = require('./routes/calendars')
 const shareRoutes = require('./routes/share')
 
 const app = express()
-const PORT = 4000
+const PORT = process.env.PORT || 4000
+const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173'
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite default
-  credentials: true
+  origin: corsOrigin,
+  credentials: true,
 }))
 app.use(express.json({ limit: '25mb' }))
 app.use(session({
@@ -34,6 +35,6 @@ app.get('/', (req, res) => {
   res.send('Advent Calendar API – Phase 0')
 })
 
-app.listen(PORT, () => {
-  console.log(`Node API listening on http://localhost:${PORT}`)
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Node API listening on port ${PORT}`)
 })
