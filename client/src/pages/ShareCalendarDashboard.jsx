@@ -232,33 +232,38 @@ function ShareCalendarDashboard() {
 
           .instructions-wrap {
             margin-top: 1.5rem;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
           }
 
           .share-instructions {
             padding: 1rem 1.1rem;
             font-size: 0.95rem;
+            order: 1;
           }
 
           .instruction-decor {
-            width: 48px;
-            height: 48px;
-            opacity: 0.8;
+            position: static;
+            width: 44px;
+            height: 44px;
+            opacity: 0.85;
           }
 
           .decor-left-top {
-            left: -40px;
+            order: 0;
           }
 
           .decor-left-bottom {
-            left: -30px;
+            order: 2;
           }
 
           .decor-right-top {
-            right: -40px;
+            order: 0;
           }
 
           .decor-right-bottom {
-            right: -30px;
+            order: 2;
           }
 
           .share-footer-decor {
@@ -278,25 +283,17 @@ function ShareCalendarDashboard() {
           }
 
           .instruction-decor {
-            width: 40px;
-            height: 40px;
-          }
-
-          .decor-left-top,
-          .decor-left-bottom,
-          .decor-right-top,
-          .decor-right-bottom {
-            left: auto;
-            right: auto;
+            width: 36px;
+            height: 36px;
           }
 
           .share-footer-decor {
-            gap: 1.75rem;
+            gap: 1.5rem;
           }
 
           .share-footer-decor img {
-            width: 76px;
-            height: 76px;
+            width: 70px;
+            height: 70px;
           }
         }
       `}</style>
