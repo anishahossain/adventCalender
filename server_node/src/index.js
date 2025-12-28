@@ -14,11 +14,14 @@ app.use(cors({
   credentials: true,
 }))
 app.use(express.json({ limit: '25mb' }))
+
+app.set('trust proxy', 1)
 app.use(session({
   name: 'sid',
   secret: process.env.SESSION_SECRET || 'dev-session-secret',
   resave: false,
   saveUninitialized: false,
+  proxy: process.env.NODE_ENV === 'production',
   cookie: {
     httpOnly: true,
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
