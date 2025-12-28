@@ -3,17 +3,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { createCalendar } from '../api/calendars'
 
 function CreateCalendarPage() {
-  const [calendarName, setCalendarName] = useState(
-    localStorage.getItem('draftCalendarName') || ''
-  )
-  const [description, setDescription] = useState(
-    localStorage.getItem('draftCalendarDescription') || ''
-  )
+  const [calendarName, setCalendarName] = useState('')
+  const [description, setDescription] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState('')
   const navigate = useNavigate()
 
   async function handleStartBuilding() {
     setIsSubmitting(true)
+    setError('')
     const draft = {
       name: calendarName || 'Untitled Calendar',
       description,
@@ -21,22 +19,14 @@ function CreateCalendarPage() {
       status: 'draft',
     }
 
-    localStorage.setItem('draftCalendarName', calendarName)
-    localStorage.setItem('draftCalendarDescription', description)
-    localStorage.setItem('draftCalendar', JSON.stringify(draft))
-
-    let calendarId = `local-${Date.now()}`
-
     try {
       const created = await createCalendar(draft)
-      calendarId = created.id
+      localStorage.setItem('currentCalendarId', created.id)
+      navigate(`/app/calendars/${created.id}/edit`)
     } catch (err) {
-      // Keep local-only id if API is unavailable.
-    } finally {
-      localStorage.setItem('currentCalendarId', calendarId)
-      setIsSubmitting(false)
-      navigate(`/app/calendars/${calendarId}/edit`)
+      setError(err.message || 'Unable to create calendar.')
     }
+    setIsSubmitting(false)
   }
 
   return (
@@ -157,10 +147,7 @@ function CreateCalendarPage() {
             className="create-input"
             placeholder="Ex: Winter Wishes"
             value={calendarName}
-            onChange={event => {
-              setCalendarName(event.target.value)
-              localStorage.setItem('draftCalendarName', event.target.value)
-            }}
+            onChange={event => setCalendarName(event.target.value)}
           />
         </div>
         <div style={{ marginBottom: '1.5rem' }}>
@@ -169,10 +156,7 @@ function CreateCalendarPage() {
             className="create-input"
             placeholder="Short note for the recipient..."
             value={description}
-            onChange={event => {
-              setDescription(event.target.value)
-              localStorage.setItem('draftCalendarDescription', event.target.value)
-            }}
+            onChange={event => setDescription(event.target.value)}
           />
         </div>
         <div style={{ marginBottom: '1.5rem' }}>
@@ -187,6 +171,11 @@ function CreateCalendarPage() {
             View Existing Calendars
           </Link>
         </div>
+        {error ? (
+          <p style={{ marginTop: '1rem', color: '#b42318', fontSize: '0.9rem' }}>
+            {error}
+          </p>
+        ) : null}
         <img
   src="/pink_bow.png"
   alt=""

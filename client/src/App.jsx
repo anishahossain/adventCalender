@@ -7,6 +7,9 @@ import BlankPage from "./pages/BlankPage.jsx";
 import CalendarsPage from "./pages/CalendarsPage.jsx";
 import CreateCalendarPage from "./pages/CreateCalendarPage.jsx";
 import CreateDaysDashboard from "./pages/CreateDaysDashboard.jsx";
+import ShareCalendarPage from "./pages/ShareCalendarPage.jsx";
+import ShareCalendarDashboard from "./pages/ShareCalendarDashboard.jsx";
+import ShareDayPreview from "./pages/ShareDayPreview.jsx";
 import DayEditDay1 from "./pages/DayEditDay1.jsx";
 import DayEditDay2 from "./pages/DayEditDay2.jsx";
 import DayEditDay3 from "./pages/DayEditDay3.jsx";
@@ -30,7 +33,9 @@ function App() {
         <Route path="/app/calendars" element={<CalendarsPage />} />
         <Route path="/app/calendar/:id/edit" element={<BlankPage title="Edit Calendar" />} />
         <Route path="/app/calendar/:id/preview" element={<BlankPage title="Preview Calendar" />} />
-        <Route path="/app/calendar/:id/share" element={<BlankPage title="Share Calendar" />} />
+        <Route path="/app/calendar/:id/share" element={<ShareCalendarPage />} />
+        <Route path="/share/:shareToken" element={<ShareCalendarDashboard />} />
+        <Route path="/share/:shareToken/day/:dayId" element={<ShareDayPreview />} />
         <Route path="/app/calendar/day/1/edit" element={<DayEditDay1 />} />
         <Route path="/app/calendar/day/2/edit" element={<DayEditDay2 />} />
         <Route path="/app/calendar/day/3/edit" element={<DayEditDay3 />} />

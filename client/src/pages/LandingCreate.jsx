@@ -1,36 +1,27 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-
-const defaultCalendars = [
-  {
-    id: 'winter-wishes',
-    title: 'Winter Wishes',
-    status: 'Draft',
-    typeDays: 7,
-    updated: 'Edited 2 days ago',
-  },
-  {
-    id: 'cocoa-countdown',
-    title: 'Cocoa Countdown',
-    status: 'Live',
-    typeDays: 7,
-    updated: 'Edited today',
-  },
-]
 
 function LandingCreate() {
   const user = JSON.parse(localStorage.getItem('authUser') || 'null')
   const lastAction = localStorage.getItem('authLastAction')
   const [showDashboard, setShowDashboard] = useState(lastAction !== 'login')
-  useEffect(() => {
-    const stored = localStorage.getItem('adventCalendars')
-    if (!stored) {
-      localStorage.setItem('adventCalendars', JSON.stringify(defaultCalendars))
-    }
-  }, [])
+  const navigate = useNavigate()
 
-  const displayName = user?.name || 'there'
+  async function handleLogout() {
+    try {
+      await fetch('http://localhost:4000/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      })
+    } finally {
+      localStorage.removeItem('authUser')
+      localStorage.removeItem('authLastAction')
+      localStorage.removeItem('authToken')
+      navigate('/login')
+    }
+  }
+  const displayName = user?.username || user?.name || 'there'
   const initial = displayName.trim().charAt(0).toUpperCase() || 'A'
 
   return (
@@ -393,7 +384,7 @@ function LandingCreate() {
             Welcome back, {displayName}
           </h1>
           <p style={{ margin: 0 }}>
-            You're signed in. When you're ready, jump into your calendars.
+            You're signed in. When you're ready, jump into creating/editing a calender!
           </p>
           <button
             className="primary-button"
@@ -464,7 +455,7 @@ function LandingCreate() {
                   </div>
                   <h1 className="header-title">Create new/Continue Building</h1>
                   <p className="header-subtitle">
-                    Draft the surprises, flip to Live, then share when it's ready.
+                    Draft the surprises, publish when it's ready, then share the link.
                   </p>
                 </div>
               </div>
@@ -484,6 +475,13 @@ function LandingCreate() {
                 <Link className="secondary-button" to="/app/calendars">
                   Your Calendars
                 </Link>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={handleLogout}
+                >
+                  Sign out
+                </button>
               </div>
               
             </section>

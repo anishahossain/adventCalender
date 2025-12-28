@@ -47,6 +47,27 @@ function DayEditDay3() {
   const saveTimerRef = useRef(null)
   const lastSaveTokenRef = useRef(0)
 
+  function ensureCalendarShape(cal) {
+    if (!cal) return null
+    const name = cal.name || 'Untitled Calendar'
+    const description = cal.description || ''
+    const type = cal.type || '7-day'
+    const status = cal.status || 'draft'
+    const days =
+      Array.isArray(cal.days) && cal.days.length === 7
+        ? cal.days
+        : Array.from({ length: 7 }, () => ({ ...DEFAULT_DAY }))
+
+    return {
+      ...cal,
+      name,
+      description,
+      type,
+      status,
+      days,
+    }
+  }
+
   useEffect(() => {
     let alive = true
 
@@ -54,10 +75,7 @@ function DayEditDay3() {
       try {
         setLoading(true)
         const remote = calendarId ? await getCalendarById(calendarId) : null
-        const localCache = calendarId
-          ? localStorage.getItem(`calendar:${calendarId}`)
-          : null
-        const cal = remote || (localCache ? JSON.parse(localCache) : null)
+        const cal = ensureCalendarShape(remote)
         if (!alive) return
 
         setCalendar(cal)
@@ -65,7 +83,7 @@ function DayEditDay3() {
         const day = cal?.days?.[dayIndex] || DEFAULT_DAY
         setBgMode(day.bgMode ?? 'color')
         setCardColor(day.cardColor ?? colorOptions[0])
-        setBgImage(day.bgImage ?? '')
+        setBgImage(day.bgImage ?? day.bgImageUrl ?? '')
         setFont(day.font ?? fonts[0])
         setSongTitle(day.songTitle ?? '')
         setArtist(day.artist ?? '')
@@ -93,7 +111,9 @@ function DayEditDay3() {
   function scheduleSave(nextCal) {
     if (!calendarId || !nextCal) return
 
-    localStorage.setItem(`calendar:${calendarId}`, JSON.stringify(nextCal))
+    const hydrated = ensureCalendarShape(nextCal)
+    if (!hydrated) return
+
     setSaveStatus('saving')
 
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current)
@@ -101,7 +121,7 @@ function DayEditDay3() {
 
     saveTimerRef.current = setTimeout(async () => {
       try {
-        await updateCalendar(calendarId, nextCal)
+        await updateCalendar(calendarId, hydrated)
         if (token !== lastSaveTokenRef.current) return
         setSaveStatus('saved')
         setTimeout(() => setSaveStatus('idle'), 1200)
@@ -193,7 +213,7 @@ function DayEditDay3() {
 
         .day-edit-layout {
           display: grid;
-          grid-template-columns: minmax(280px, 1fr) minmax(280px, 380px);
+          grid-template-columns: 60% 40%;
           gap: 2rem;
           align-items: start;
         }

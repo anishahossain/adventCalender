@@ -42,6 +42,27 @@ function DayEditDay1() {
   const saveTimerRef = useRef(null)
   const lastSaveTokenRef = useRef(0)
 
+  function ensureCalendarShape(cal) {
+    if (!cal) return null
+    const name = cal.name || 'Untitled Calendar'
+    const description = cal.description || ''
+    const type = cal.type || '7-day'
+    const status = cal.status || 'draft'
+    const days =
+      Array.isArray(cal.days) && cal.days.length === 7
+        ? cal.days
+        : Array.from({ length: 7 }, () => ({ ...DEFAULT_DAY }))
+
+    return {
+      ...cal,
+      name,
+      description,
+      type,
+      status,
+      days,
+    }
+  }
+
   // Load calendar on mount
   useEffect(() => {
     let alive = true
@@ -50,15 +71,8 @@ function DayEditDay1() {
       try {
         setLoading(true)
 
-        // Try backend first
         const remote = calendarId ? await getCalendarById(calendarId) : null
-
-        // Fallback to localStorage cache if needed
-        const localCache = calendarId
-          ? localStorage.getItem(`calendar:${calendarId}`)
-          : null
-
-        const cal = remote || (localCache ? JSON.parse(localCache) : null)
+        const cal = ensureCalendarShape(remote)
         if (!alive) return
 
         setCalendar(cal)
@@ -128,9 +142,8 @@ function DayEditDay1() {
   // Debounced save (PUT whole calendar)
   function scheduleSave(nextCal) {
     if (!calendarId || !nextCal) return
-
-    // always mirror locally as backup
-    localStorage.setItem(`calendar:${calendarId}`, JSON.stringify(nextCal))
+    const hydrated = ensureCalendarShape(nextCal)
+    if (!hydrated) return
 
     setSaveStatus('saving')
 
@@ -140,7 +153,7 @@ function DayEditDay1() {
 
     saveTimerRef.current = setTimeout(async () => {
       try {
-        await updateCalendar(calendarId, nextCal)
+        await updateCalendar(calendarId, hydrated)
         // ignore stale saves
         if (token !== lastSaveTokenRef.current) return
         setSaveStatus('saved')
@@ -233,7 +246,7 @@ function DayEditDay1() {
 
         .day-edit-layout {
           display: grid;
-          grid-template-columns: minmax(280px, 1fr) minmax(280px, 380px);
+          grid-template-columns: 60% 40%;
           gap: 2rem;
           align-items: start;
         }

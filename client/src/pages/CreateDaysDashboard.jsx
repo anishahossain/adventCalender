@@ -21,9 +21,7 @@ const days = Array.from({ length: 7 }, (_, index) => ({
 
 function CreateDaysDashboard() {
   const { id } = useParams()
-  const [calendarName, setCalendarName] = useState(
-    localStorage.getItem('draftCalendarName') || ''
-  )
+  const [calendarName, setCalendarName] = useState('')
   const [calendarStatus, setCalendarStatus] = useState('')
 
   useEffect(() => {
@@ -36,22 +34,14 @@ function CreateDaysDashboard() {
         const calendar = await getCalendarById(id)
         if (!alive || !calendar) return
         localStorage.setItem('currentCalendarId', calendar.id)
-        localStorage.setItem('draftCalendarName', calendar.name || '')
         setCalendarName(calendar.name || '')
-        setCalendarStatus(calendar.status || '')
+        const isPublished = Boolean(
+          calendar.isPublished || (calendar.status || '').toLowerCase() === 'published'
+        )
+        setCalendarStatus(isPublished ? 'Published' : 'Draft')
       } catch (err) {
-        const localCache = localStorage.getItem(`calendar:${id}`)
-        if (!localCache) return
-        try {
-          const parsed = JSON.parse(localCache)
-          if (!alive || !parsed) return
-          localStorage.setItem('currentCalendarId', parsed.id || id)
-          localStorage.setItem('draftCalendarName', parsed.name || '')
-          setCalendarName(parsed.name || '')
-          setCalendarStatus(parsed.status || '')
-        } catch {
-          // Ignore cache errors.
-        }
+        setCalendarName('')
+        setCalendarStatus('Draft')
       }
     }
 
@@ -151,14 +141,23 @@ function CreateDaysDashboard() {
           <p style={{ margin: '0.4rem 0 0', fontSize: '1.5rem' }}>
             {calendarName ? `Working on: ${calendarName}` : 'Add a name to get started.'}
           </p>
-          {id && (
-            <p style={{ margin: '0.3rem 0 0', fontSize: '0.85rem' }}>
-              Calendar ID: {id}{calendarStatus ? ` · ${calendarStatus}` : ''}
-            </p>
-          )}
+          <p style={{ margin: '0.3rem 0 0', fontSize: '0.85rem' }}>
+            Status: {calendarStatus || 'Draft'}
+          </p>
+          <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            {id ? (
+              <Link className="day-button" to={`/app/calendar/${id}/share`}>
+                Complete & Share
+              </Link>
+            ) : (
+              <button className="day-button" type="button" disabled>
+                Complete & Share
+              </button>
+            )}
+          </div>
         </div>
         <Link
-          to="/app/create"
+          to="/app/calendars"
           style={{
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
@@ -169,7 +168,7 @@ function CreateDaysDashboard() {
             borderRadius: '999px',
           }}
         >
-          Back to details
+          Back to your calendars
         </Link>
       </div>
 

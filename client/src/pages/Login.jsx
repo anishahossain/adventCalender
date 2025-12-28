@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import AuthLayout from '../components/AuthLayout.jsx'
 
 function LoginPage() {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -18,17 +18,17 @@ function LoginPage() {
       const res = await fetch('http://localhost:4000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        credentials: 'include',
+        body: JSON.stringify({ username, password }),
       })
 
       const data = await res.json()
 
       if (!res.ok) throw new Error(data.message || 'Login failed')
-
-      localStorage.setItem('authToken', data.token)
-      localStorage.setItem('authUser', JSON.stringify(data.user))
-      localStorage.setItem('authLastAction', 'app')
-
+      if (data.user) {
+        localStorage.setItem('authUser', JSON.stringify(data.user))
+        localStorage.setItem('authLastAction', 'login')
+      }
       navigate('/app')
     } catch (err) {
       setError(err.message)
@@ -41,12 +41,11 @@ function LoginPage() {
     <AuthLayout mode="login">
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1rem' }}>
         <div>
-          <label className="auth-label">Email</label>
+          <label className="auth-label">Username</label>
           <input
             className="auth-input"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={username}
+            onChange={e => setUsername(e.target.value)}
             required
           />
         </div>

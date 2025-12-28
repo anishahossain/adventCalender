@@ -30,6 +30,27 @@ function DayEditDay2() {
   const saveTimerRef = useRef(null)
   const lastSaveTokenRef = useRef(0)
 
+  function ensureCalendarShape(cal) {
+    if (!cal) return null
+    const name = cal.name || 'Untitled Calendar'
+    const description = cal.description || ''
+    const type = cal.type || '7-day'
+    const status = cal.status || 'draft'
+    const days =
+      Array.isArray(cal.days) && cal.days.length === 7
+        ? cal.days
+        : Array.from({ length: 7 }, () => ({ ...DEFAULT_DAY }))
+
+    return {
+      ...cal,
+      name,
+      description,
+      type,
+      status,
+      days,
+    }
+  }
+
   useEffect(() => {
     let alive = true
 
@@ -37,10 +58,7 @@ function DayEditDay2() {
       try {
         setLoading(true)
         const remote = calendarId ? await getCalendarById(calendarId) : null
-        const localCache = calendarId
-          ? localStorage.getItem(`calendar:${calendarId}`)
-          : null
-        const cal = remote || (localCache ? JSON.parse(localCache) : null)
+        const cal = ensureCalendarShape(remote)
         if (!alive) return
 
         setCalendar(cal)
@@ -67,7 +85,9 @@ function DayEditDay2() {
   function scheduleSave(nextCal) {
     if (!calendarId || !nextCal) return
 
-    localStorage.setItem(`calendar:${calendarId}`, JSON.stringify(nextCal))
+    const hydrated = ensureCalendarShape(nextCal)
+    if (!hydrated) return
+
     setSaveStatus('saving')
 
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current)
@@ -75,7 +95,7 @@ function DayEditDay2() {
 
     saveTimerRef.current = setTimeout(async () => {
       try {
-        await updateCalendar(calendarId, nextCal)
+        await updateCalendar(calendarId, hydrated)
         if (token !== lastSaveTokenRef.current) return
         setSaveStatus('saved')
         setTimeout(() => setSaveStatus('idle'), 1200)
@@ -237,7 +257,23 @@ function DayEditDay2() {
 
         .panel input[type="file"] {
           width: 100%;
-          font-size: 1rem;
+          padding: 0.65rem 0.85rem;
+          border: 1px solid #111;
+          background: #fff;
+          font-size: 0.95rem;
+          border-radius: 12px;
+        }
+
+        .file-input::file-selector-button {
+          margin-right: 0.75rem;
+          border: 1px solid #111;
+          background: #fff;
+          padding: 0.4rem 0.7rem;
+          border-radius: 999px;
+          font-size: 0.8rem;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          cursor: pointer;
         }
 
         .color-row {
@@ -356,7 +392,12 @@ function DayEditDay2() {
 
           <div style={{ fontSize: '1.15rem' }}>
             <label>Upload Picture</label>
-            <input type="file" accept="image/*" onChange={handlePhotoChange} />
+            <input
+              className="file-input"
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoChange}
+            />
             <div style={{ fontSize: '0.95rem', opacity: 0.75, marginTop: 6 }}>
               The image is stored in the calendar record for Day 2.
             </div>

@@ -1,86 +1,57 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { listCalendars } from '../api/calendars'
-
-const fallbackCalendars = [
-  {
-    id: 'winter-wishes',
-    title: 'Winter Wishes',
-    status: 'Draft',
-    typeDays: 7,
-    updated: 'Edited 2 days ago',
-  },
-  {
-    id: 'cocoa-countdown',
-    title: 'Cocoa Countdown',
-    status: 'Live',
-    typeDays: 7,
-    updated: 'Edited today',
-  },
-]
+import { deleteCalendar, listCalendars } from '../api/calendars'
 
 function CalendarsPage() {
   const [calendars, setCalendars] = useState([])
+  const [deletingId, setDeletingId] = useState(null)
+  const [deleteError, setDeleteError] = useState('')
+  const [deleteErrorId, setDeleteErrorId] = useState('')
 
   useEffect(() => {
     async function loadCalendars() {
-      const stored = localStorage.getItem('adventCalendars')
-      let localCalendars = []
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored)
-          localCalendars = Array.isArray(parsed) ? parsed : []
-        } catch {
-          localCalendars = []
-        }
-      }
-
       try {
         const data = await listCalendars()
         const apiCalendars = Array.isArray(data) ? data : []
-        const merged = new Map()
-
-        apiCalendars.forEach(calendar => merged.set(calendar.id, calendar))
-        localCalendars.forEach(localCalendar => {
-          const existing = merged.get(localCalendar.id)
-          if (!existing) {
-            merged.set(localCalendar.id, localCalendar)
-            return
-          }
-
-          const apiUpdated = Date.parse(existing.updatedAt || 0)
-          const localUpdated = Date.parse(localCalendar.updatedAt || 0)
-          if (localUpdated > apiUpdated) {
-            merged.set(localCalendar.id, localCalendar)
-          }
-        })
-
-        const mergedList = Array.from(merged.values())
-        setCalendars(mergedList.length ? mergedList : fallbackCalendars)
-        localStorage.setItem('adventCalendars', JSON.stringify(mergedList))
+        setCalendars(apiCalendars)
         return
       } catch (err) {
-        // Fall back to local draft storage if API is unavailable.
+        setCalendars([])
       }
-
-      if (!localCalendars.length) {
-        setCalendars(fallbackCalendars)
-        localStorage.setItem('adventCalendars', JSON.stringify(fallbackCalendars))
-        return
-      }
-
-      setCalendars(localCalendars)
     }
 
     loadCalendars()
   }, [])
 
+  async function handleDeleteCalendar(calendar) {
+    if (!calendar?.id) return
+    if (calendar.isPublished) return
+    const status = (calendar.status || '').toLowerCase()
+    if (status === 'published') return
+    const confirmed = window.confirm(`Delete "${calendar.title || calendar.name || 'this calendar'}"?`)
+    if (!confirmed) return
+    setDeleteError('')
+    setDeleteErrorId('')
+    setDeletingId(calendar.id)
+    try {
+      await deleteCalendar(calendar.id)
+      setCalendars(prev => prev.filter(item => item.id !== calendar.id))
+    } catch (err) {
+      setDeleteError(err.message || 'Unable to delete calendar.')
+      setDeleteErrorId(calendar.id)
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
   const displayCalendars = calendars.map(calendar => {
     if (calendar.title) return calendar
+    const isPublished = Boolean(calendar.isPublished || (calendar.status || '').toLowerCase() === 'published')
     return {
       id: calendar.id,
       title: calendar.name || 'Untitled Calendar',
-      status: calendar.status || 'Draft',
+      status: isPublished ? 'Published' : 'Draft',
+      isPublished,
       typeDays: calendar.days?.length || 7,
       updated: calendar.updatedAt ? `Updated ${new Date(calendar.updatedAt).toLocaleDateString()}` : 'Updated recently',
     }
@@ -227,45 +198,74 @@ function CalendarsPage() {
           Back to home base
         </Link>
       </div>
-      <div className="calendar-grid" style={{ marginTop: '2rem' }}>
-        {displayCalendars.map((calendar, index) => (
-          <article
-            className="calendar-card"
-            key={calendar.id}
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <div>
-              <h4 style={{ margin: 0, fontSize: '1.2rem' }}>{calendar.title}</h4>
-              <p style={{ margin: '0.35rem 0 0', fontSize: '0.85rem' }}>{calendar.updated}</p>
-            </div>
-            <div className="calendar-meta">
-              <span className={`badge ${calendar.status === 'Live' ? 'live' : ''}`}>
-                Status: {calendar.status}
-              </span>
-              <span className="badge">Type: {calendar.typeDays}-day</span>
-            </div>
+      {displayCalendars.length === 0 ? (
+        <div
+          style={{
+            marginTop: '2.5rem',
+            padding: '2rem',
+            border: '1px solid #111',
+            background: '#fff',
+            boxShadow: '6px 6px 0 #111',
+            maxWidth: '520px',
+          }}
+        >
+          <h2 style={{ margin: 0, fontSize: '1.4rem' }}>You currently have no calendars.</h2>
+          <p style={{ margin: '0.6rem 0 1.2rem' }}>
+            Go ahead and make one!
+          </p>
+          <Link className="pill-button" to="/app/create">
+            Create a new calendar
+          </Link>
+        </div>
+      ) : (
+        <div className="calendar-grid" style={{ marginTop: '2rem' }}>
+          {displayCalendars.map((calendar, index) => (
+            <article
+              className="calendar-card"
+              key={calendar.id}
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div>
+                <h4 style={{ margin: 0, fontSize: '1.2rem' }}>{calendar.title}</h4>
+                <p style={{ margin: '0.35rem 0 0', fontSize: '0.85rem' }}>{calendar.updated}</p>
+              </div>
+              <div className="calendar-meta">
+                <span className={`badge ${calendar.isPublished ? 'live' : ''}`}>
+                  Status: {calendar.status}
+                </span>
+                <span className="badge">Type: {calendar.typeDays}-day</span>
+              </div>
             <div className="card-actions">
               <Link className="pill-button" to={`/app/calendars/${calendar.id}/edit`}>
                 Edit
               </Link>
-              <Link className="pill-button secondary" to={`/app/calendar/${calendar.id}/preview`}>
-                Preview
-              </Link>
               <Link
                 className="pill-button secondary"
                 to={`/app/calendar/${calendar.id}/share`}
-                aria-disabled={calendar.status !== 'Live'}
-                onClick={event => {
-                  if (calendar.status !== 'Live') event.preventDefault()
-                }}
-              >
-                Share
-              </Link>
-            </div>
-            <p className="share-note">Sharing unlocks once the calendar is Live.</p>
-          </article>
-        ))}
-      </div>
+                >
+                  Share
+                </Link>
+                {!calendar.isPublished ? (
+                  <button
+                    className="pill-button secondary"
+                    type="button"
+                    disabled={deletingId === calendar.id}
+                    onClick={() => handleDeleteCalendar(calendar)}
+                  >
+                    {deletingId === calendar.id ? 'Deleting...' : 'Delete'}
+                  </button>
+                ) : null}
+              </div>
+              <p className="share-note">Draft calendars are private. Publish to share.</p>
+              {deleteError && deleteErrorId === calendar.id ? (
+                <p className="share-note" style={{ color: '#b42318' }}>
+                  {deleteError}
+                </p>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

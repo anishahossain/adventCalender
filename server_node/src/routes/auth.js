@@ -1,60 +1,76 @@
 const express = require('express')
 const crypto = require('crypto')
+const bcrypt = require('bcryptjs')
+const store = require('../../db/postgresStore')
 
 const router = express.Router()
 
-// In-memory user list – resets when server restarts
-const users = []
-
-// Very basic password check – NOT for production
-function findUserByEmail(email) {
-  return users.find(u => u.email.toLowerCase() === email.toLowerCase())
+function toPublicUser(user) {
+  return {
+    id: user.id,
+    username: user.username,
+    createdAt: user.createdAt,
+  }
 }
 
-// POST /api/auth/register
-router.post('/register', (req, res) => {
-  const { name, email, password } = req.body
+// POST /api/auth/signup
+router.post('/signup', async (req, res) => {
+  const { username, password } = req.body || {}
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ message: 'name, email, and password are required' })
+  if (!username || !password) {
+    return res.status(400).json({ message: 'username and password are required' })
   }
 
-  if (findUserByEmail(email)) {
-    return res.status(409).json({ message: 'Email already registered' })
+  const existing = await store.findUserByUsername(username)
+  if (existing) {
+    return res.status(409).json({ message: 'username already in use' })
   }
 
-  const id = crypto.randomUUID()
-  const user = { id, name, email, password } // plain text for now (fake auth only)
+  const id = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}`
+  const passwordHash = await bcrypt.hash(password, 10)
+  const user = await store.createUser({ id, username, passwordHash })
 
-  users.push(user)
-
-  // fake token
-  const token = `fake-token-${id}`
-
-  res.status(201).json({
-    user: { id, name, email },
-    token,
-  })
+  req.session.userId = user.id
+  res.status(201).json({ user: toPublicUser(user) })
 })
 
 // POST /api/auth/login
-router.post('/login', (req, res) => {
-  const { email, password } = req.body
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body || {}
 
-  if (!email || !password) {
-    return res.status(400).json({ message: 'email and password are required' })
+  if (!username || !password) {
+    return res.status(400).json({ message: 'username and password are required' })
   }
 
-  const user = findUserByEmail(email)
-  if (!user || user.password !== password) {
-    return res.status(401).json({ message: 'Invalid email or password' })
+  const user = await store.findUserByUsername(username)
+  const passwordOk = user ? await bcrypt.compare(password, user.passwordHash) : false
+  if (!user || !passwordOk) {
+    return res.status(401).json({ message: 'invalid username/password' })
   }
 
-  const token = `fake-token-${user.id}`
+  req.session.userId = user.id
+  res.json({ user: toPublicUser(user) })
+})
 
-  res.json({
-    user: { id: user.id, name: user.name, email: user.email },
-    token,
+// GET /api/auth/me
+router.get('/me', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: 'not authenticated' })
+  }
+
+  const user = await store.getUserById(req.session.userId)
+  if (!user) {
+    return res.status(401).json({ message: 'not authenticated' })
+  }
+
+  res.json({ user: toPublicUser(user) })
+})
+
+// POST /api/auth/logout
+router.post('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.clearCookie('sid')
+    res.status(204).end()
   })
 })
 
