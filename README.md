@@ -1,5 +1,5 @@
-# 🎄 Advent Calendar Builder
-
+# 🎄 Advent Calendar Builder (deployed)
+## view it here: https://advent-calender-psi.vercel.app/signup
 Interactive, portfolio-ready web app for crafting and sharing 7-day digital advent calendars. Built for a polished onboarding-to-builder journey with future hooks for Node.js and Python services.
 
 ## Status
@@ -11,10 +11,8 @@ Design and share custom advent calendars through a guided flow: auth → dashboa
 
 ## Feature Phases
 - ✅ Phase 0 — Authentication shell: animated gradient AuthLayout, Adobe Fonts (Hagrid), `/signup` + `/login` with localStorage-backed fake auth, placeholder `/app`.
-  <img width="1200" alt="Phase 0 Auth" src="https://github.com/user-attachments/assets/189d9df6-4a7a-4d7d-829d-9dcd42750bb9" />
 
 - ✅ Phase 1 — Dashboard (`/app`, current): greeting hero, CTA card for “Create a New Advent Calendar”, localStorage-seeded draft data, edit/preview/share actions, and a dedicated “Your Calendars” page at `/app/calendars`.
-  <img width="1200" alt="Phase 1 Dashboard" src="https://github.com/user-attachments/assets/2b6b52d3-4db7-4635-b2e7-60d6d7392bce" />
 
 - ✅ Phase 2 — Creation + day editing: `/app/create`, `/app/calendars/:id/edit` 7‑day dashboard, Day 1 (Message) editor with background presets, Day 2 (Picture) editor with upload + preview, day preview screen, Postgres persistence.
 
