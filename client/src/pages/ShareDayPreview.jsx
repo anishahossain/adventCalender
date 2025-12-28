@@ -342,6 +342,37 @@ function ShareDayPreview() {
             0 0 4px rgba(255, 255, 255, 0.85),
             0 0 10px rgba(255, 255, 255, 0.85);
         }
+
+        @media (max-width: 768px) {
+          .day-preview-shell {
+            padding: 2rem 1.25rem;
+          }
+
+          .preview-frame {
+            margin: 3.5rem auto 0;
+            padding: 1.8rem;
+          }
+
+          .preview-card {
+            padding: 1.5rem;
+            min-height: 260px;
+          }
+        }
+
+        @media (max-width: 520px) {
+          .day-preview-shell {
+            padding: 1.75rem 1rem;
+          }
+
+          .preview-frame {
+            margin: 3rem auto 0;
+            padding: 1.4rem;
+          }
+
+          .preview-card {
+            padding: 1.2rem;
+          }
+        }
       `}</style>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

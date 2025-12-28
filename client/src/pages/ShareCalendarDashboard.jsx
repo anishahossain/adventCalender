@@ -207,10 +207,103 @@ function ShareCalendarDashboard() {
           opacity: 0.9;
           pointer-events: none;
         }
+
+        @media (max-width: 768px) {
+          .share-view-shell {
+            padding: 2rem 1.25rem;
+          }
+
+          .share-header-row {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .share-created-by {
+            font-size: 1rem;
+          }
+
+          .share-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .share-card {
+            padding: 1.2rem;
+          }
+
+          .instructions-wrap {
+            margin-top: 1.5rem;
+          }
+
+          .share-instructions {
+            padding: 1rem 1.1rem;
+            font-size: 0.95rem;
+          }
+
+          .instruction-decor {
+            width: 48px;
+            height: 48px;
+            opacity: 0.8;
+          }
+
+          .decor-left-top {
+            left: -40px;
+          }
+
+          .decor-left-bottom {
+            left: -30px;
+          }
+
+          .decor-right-top {
+            right: -40px;
+          }
+
+          .decor-right-bottom {
+            right: -30px;
+          }
+
+          .share-footer-decor {
+            margin-top: 2rem;
+            gap: 2.5rem;
+          }
+
+          .share-footer-decor img {
+            width: 90px;
+            height: 90px;
+          }
+        }
+
+        @media (max-width: 520px) {
+          .share-view-shell {
+            padding: 1.75rem 1rem;
+          }
+
+          .instruction-decor {
+            width: 40px;
+            height: 40px;
+          }
+
+          .decor-left-top,
+          .decor-left-bottom,
+          .decor-right-top,
+          .decor-right-bottom {
+            left: auto;
+            right: auto;
+          }
+
+          .share-footer-decor {
+            gap: 1.75rem;
+          }
+
+          .share-footer-decor img {
+            width: 76px;
+            height: 76px;
+          }
+        }
       `}</style>
 
       <div style={{ marginBottom: '2rem' }}>
         <div
+          className="share-header-row"
           style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -222,7 +315,10 @@ function ShareCalendarDashboard() {
           <h1 style={{ fontFamily: '"hagrid", "sofia-pro", sans-serif', margin: 0 }}>
             Calendar Name: {calendar.name || 'Shared Calendar'}
           </h1>
-          <span style={{ fontSize: '1.3rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+          <span
+            className="share-created-by"
+            style={{ fontSize: '1.3rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}
+          >
             Created by: {calendar.createdBy || 'Unknown'}
           </span>
         </div>
