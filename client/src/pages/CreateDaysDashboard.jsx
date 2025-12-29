@@ -162,15 +162,6 @@ function CreateDaysDashboard() {
             >
               Ready
             </button>
-            {id && shareReady ? (
-              <Link className="day-button" to={`/app/calendar/${id}/share`}>
-                Share
-              </Link>
-            ) : (
-              <button className="day-button" type="button" disabled>
-                Share
-              </button>
-            )}
           </div>
           {shareReady ? (
             <p style={{ margin: '0.35rem 0 0', fontSize: '0.85rem', color: '#6b5548' }}>
