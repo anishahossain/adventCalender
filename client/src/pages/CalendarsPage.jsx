@@ -245,18 +245,21 @@ function CalendarsPage() {
                 >
                   Share
                 </Link>
-                {!calendar.isPublished ? (
-                  <button
-                    className="pill-button secondary"
-                    type="button"
-                    disabled={deletingId === calendar.id}
-                    onClick={() => handleDeleteCalendar(calendar)}
-                  >
-                    {deletingId === calendar.id ? 'Deleting...' : 'Delete'}
-                  </button>
-                ) : null}
+                <button
+                  className="pill-button secondary"
+                  type="button"
+                  disabled={calendar.isPublished || deletingId === calendar.id}
+                  onClick={() => handleDeleteCalendar(calendar)}
+                >
+                  {deletingId === calendar.id ? 'Deleting...' : 'Delete'}
+                </button>
               </div>
               <p className="share-note">Draft calendars are private. Publish to share.</p>
+              {calendar.isPublished ? (
+                <p className="share-note">
+                  You cannot delete a published calendar. Unpublish it to delete.
+                </p>
+              ) : null}
               {deleteError && deleteErrorId === calendar.id ? (
                 <p className="share-note" style={{ color: '#b42318' }}>
                   {deleteError}
