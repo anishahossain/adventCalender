@@ -23,6 +23,7 @@ function CreateDaysDashboard() {
   const { id } = useParams()
   const [calendarName, setCalendarName] = useState('')
   const [calendarStatus, setCalendarStatus] = useState('')
+  const [shareReady, setShareReady] = useState(false)
 
   useEffect(() => {
     if (!id) return
@@ -39,9 +40,11 @@ function CreateDaysDashboard() {
           calendar.isPublished || (calendar.status || '').toLowerCase() === 'published'
         )
         setCalendarStatus(isPublished ? 'Published' : 'Draft')
+        setShareReady(false)
       } catch (err) {
         setCalendarName('')
         setCalendarStatus('Draft')
+        setShareReady(false)
       }
     }
 
@@ -142,19 +145,38 @@ function CreateDaysDashboard() {
             {calendarName ? `Working on: ${calendarName}` : 'Add a name to get started.'}
           </p>
           <p style={{ margin: '0.3rem 0 0', fontSize: '0.85rem' }}>
-            Status: {calendarStatus || 'Draft'}
+            Share state: {shareReady ? 'Ready' : 'Draft'}
           </p>
-          <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            {id ? (
+          <div style={{ marginTop: '0.75rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.75rem' }}>
+            <button
+              className={`day-button ${shareReady ? 'secondary' : ''}`}
+              type="button"
+              onClick={() => setShareReady(false)}
+            >
+              Draft
+            </button>
+            <button
+              className={`day-button ${shareReady ? '' : 'secondary'}`}
+              type="button"
+              onClick={() => setShareReady(true)}
+            >
+              Ready
+            </button>
+            {id && shareReady ? (
               <Link className="day-button" to={`/app/calendar/${id}/share`}>
-                Complete & Share
+                Share
               </Link>
             ) : (
               <button className="day-button" type="button" disabled>
-                Complete & Share
+                Share
               </button>
             )}
           </div>
+          {shareReady ? (
+            <p style={{ margin: '0.35rem 0 0', fontSize: '0.85rem', color: '#6b5548' }}>
+              Ready to share? Go back to your calendar list and hit Share!
+            </p>
+          ) : null}
         </div>
         <Link
           to="/app/calendars"

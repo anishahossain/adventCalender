@@ -255,6 +255,9 @@ function ShareCalendarPage() {
         <p style={{ margin: 0, color: '#6b5548' }}>
           Recipients can open each day, but cannot edit anything.
         </p>
+        <p style={{ margin: 0, color: '#6b5548', fontSize: '0.85rem' }}>
+          Open day buttons activate after you publish the calendar.
+        </p>
         <div className="preview-grid">
           {previewDays.map(day => (
             <div className="preview-card" key={day.id}>
